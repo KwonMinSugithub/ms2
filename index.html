@@ -30,7 +30,7 @@ function setCenter(lat, lng) {
 var markers = []
 function addMarker(lat, lng){
     // 마커가 표시될 위치입니다 
-    var markerPosition  = new kakao.maps.LatLng(lng, lat); 
+    var markerPosition  = new kakao.maps.LatLng(lat, lng); 
 
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
@@ -44,6 +44,10 @@ function showMarker(){
         markers[i].setMap(map);
     }
 }
+
+    // 테스트를 위한 마커 추가 및 표시
+addMarker(33.450701, 126.570667);
+showMarker();
 </script>
 </body>
 </html>
