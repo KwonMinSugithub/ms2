@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Kakao Map with Directions</title>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=034e936031c1108d9f1daa1831f1814b&libraries=services"></script>
+    <meta charset="utf-8">
+    <title>지도 생성하기</title>
+    
 </head>
 <body>
-    <div id="map" style="width:100%;height:350px;"></div>
-    <script src="script.js"></script>
+<!-- 지도를 표시할 div 입니다 -->
+<div id="map" style="width:100%;height:350px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6247eaccb11bf47ec7f8a4190b96948e"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+var markerPos = new kakao.maps.LatLng(33.450701, 126.570667)
+var marker = new kakao.maps.Marker(
+    {position:markerPos}
+)
+function setCenter(lat, lng)
+{
+    marker.setMap(null)
+    var mp = new kakao.maps.LatLng(lat,lng)
+    map.setCenter(mp)
+    marker = new kakao.maps.Marker({position:mp})
+    marker.setMap(map)
+}
+</script>
 </body>
 </html>
