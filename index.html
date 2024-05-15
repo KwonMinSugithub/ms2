@@ -17,6 +17,9 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         level: 3 // 지도의 확대 레벨
     };
 
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
 function setCenter(lat, lng) {            
     // 이동할 위도 경도 위치를 생성합니다 
     var moveLatLon = new kakao.maps.LatLng(lat, lng);
@@ -27,7 +30,7 @@ function setCenter(lat, lng) {
 var markers = []
 function addMarker(lat, lng){
     // 마커가 표시될 위치입니다 
-    var markerPosition  = new kakao.maps.LatLng(lat, lng); 
+    var markerPosition  = new kakao.maps.LatLng(lng, lat); 
 
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
@@ -42,8 +45,52 @@ function showMarker(){
     }
 }
 
-// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+var marker;
+var infowindow;
+function setMarkerOnly(lat,lng,msg){
+    var markerPosition  = new kakao.maps.LatLng(lng,lat);
+    if(marker != null){
+        marker.setMap(null);// 마커 지우기
+    }
+
+    // 이동할 위도 경도 위치를 생성합니다 
+    marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+    marker.setMap(map);
+
+    if(infowindow != null){
+        infowindow.setMap(null);
+    }
+    infowindow = new kakao.maps.InfoWindow({
+        position: markerPosition,
+        content: msg
+    });
+    infowindow.open(map, marker); 
+}
+
+
+var polyline;
+function setLine(){
+    var linepath=[];
+    var bounds = new kakao.maps.LatLngBounds();
+    for(var i=0; i<arguments.length;i+=2){
+        linepath.push(new kakao.maps.LatLng(arguments[i],arguments[i+1]));
+        bounds.extend(new kakao.maps.LatLng(arguments[i],arguments[i+1]));
+    }
+    if(polyline != null){
+        polyline.setMap(null);
+    }
+    polyline = new kakao.maps.Polyline({
+        path:linepath,
+        strokeWeight:5,
+        strokeColor:'#FF00FF',
+        strokeOpacity:1.0,
+        strokeStyle:'solid'
+    });
+    polyline.setMap(map);
+    map.setBounds(bounds);
+}
 </script>
 </body>
 </html>
